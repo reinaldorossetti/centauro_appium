@@ -5,9 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-
 import org.openqa.selenium.remote.DesiredCapabilities;
-
 import centauro.model.Customer;
 import centauro.model.Product;
 import centauro.properties.LoadProperties;
@@ -48,9 +46,7 @@ public class DriverFactory {
 	public static Customer getCustomerInstance() {
 		if(getCustomer() == null) {
 			customer = new Customer();
-
 			writeToFile();
-		    
 		}
 		return getCustomer();
 	}
@@ -58,9 +54,7 @@ public class DriverFactory {
 	public static Product getProductInstance() {
 		if(getProduct() == null) {
 			product = new Product();
-
 			writeToFile();
-
 		}
 		return getProduct();
 	}

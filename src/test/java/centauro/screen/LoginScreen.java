@@ -4,10 +4,6 @@ import centauro.model.Customer;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-
-import java.io.FileReader;
 
 public class LoginScreen extends BaseScreen {
 

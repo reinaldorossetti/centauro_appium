@@ -1,7 +1,6 @@
 package centauro.screen;
 
 import java.util.List;
-
 import centauro.model.Customer;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
@@ -84,20 +83,17 @@ public class RegisterScreen extends BaseScreen {
 		clickOn(masculino);
 		sendValue(inputTelefone, customer.phone);
 		sendValue(inputDataNascimento, customer.birthdate);
-		
 		hideKeyboard();
 		clickOn(btnContinuar);
 	}
 	
 	public void fillSecondPage(Customer customer) {
-		sendValue(inputCep, customer.cep); // Should auto fill street, neighborhood, city and state
+		sendValue(inputCep, customer.cep);
 		sendValue(inputEnderecoNumero, customer.address_number);
 		sendValue(inputEnderecoComplemento, customer.address_complement);
 		hideKeyboard();
-		// errou aqui, adicionei um swipe em caso de erro.
 		sendValue(inputEmail, customer.email);
 		hideKeyboard();
-
 		moveToBottom();
 		sendValue(inputSenha, customer.password);
 		System.out.println("Email: " + customer.email + " - Password: " + customer.password);

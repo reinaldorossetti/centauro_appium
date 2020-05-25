@@ -1,6 +1,5 @@
 package centauro.screen;
 
-
 import org.junit.Assert;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
@@ -54,13 +53,5 @@ public class OrderScreen extends BaseScreen {
 		Assert.assertTrue(resultbilletCode);
 		Assert.assertTrue(resultCPF);
 		Assert.assertTrue(resultAvalista);
-	}
-	
-	private String cleanBilletCode(String billetCode) {
-		return billetCode.replaceAll("\\s+","").replaceAll("\\.", "");
-	}
-	
-	private String cleanTotalValue(String value) {
-		return value.replaceAll("[\\s|\\u00A0]+", "");
 	}
 }

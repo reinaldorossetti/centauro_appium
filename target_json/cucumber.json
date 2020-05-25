@@ -1,0 +1,109 @@
+[
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2020-05-25T19:34:07.841Z",
+        "line": 4,
+        "name": "paying method Billet",
+        "description": "",
+        "id": "verify-order-billet-payment-method;paying-method-billet",
+        "after": [
+          {
+            "result": {
+              "duration": 398000000,
+              "status": "passed"
+            },
+            "match": {
+              "location": "stepsdefinitions.Hooks.after()"
+            }
+          }
+        ],
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 44667000000,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "I have an order",
+            "match": {
+              "location": "stepsdefinitions.VerificarCompraPorBoletoSteps.i_have_an_order()"
+            },
+            "after": [
+              {
+                "result": {
+                  "duration": 875000000,
+                  "status": "passed"
+                },
+                "match": {
+                  "location": "stepsdefinitions.Hooks.afterStep(io.cucumber.java.Scenario)"
+                }
+              }
+            ],
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 10138000000,
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "I check my last order",
+            "match": {
+              "location": "stepsdefinitions.VerificarCompraPorBoletoSteps.i_check_my_last_order()"
+            },
+            "after": [
+              {
+                "result": {
+                  "duration": 480000000,
+                  "status": "passed"
+                },
+                "match": {
+                  "location": "stepsdefinitions.Hooks.afterStep(io.cucumber.java.Scenario)"
+                }
+              }
+            ],
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 38757000000,
+              "status": "passed"
+            },
+            "line": 7,
+            "name": "I shall verify the billet is right",
+            "match": {
+              "location": "stepsdefinitions.VerificarCompraPorBoletoSteps.i_shall_verify_the_billet_is_right()"
+            },
+            "after": [
+              {
+                "result": {
+                  "duration": 566000000,
+                  "status": "passed"
+                },
+                "match": {
+                  "location": "stepsdefinitions.Hooks.afterStep(io.cucumber.java.Scenario)"
+                }
+              }
+            ],
+            "keyword": "Then "
+          }
+        ],
+        "tags": [
+          {
+            "name": "@billet"
+          }
+        ]
+      }
+    ],
+    "name": "Verify order Billet payment method",
+    "description": "",
+    "id": "verify-order-billet-payment-method",
+    "keyword": "Feature",
+    "uri": "classpath:stepsdefinitions/verificar_compra_por_boleto.feature",
+    "tags": []
+  }
+]

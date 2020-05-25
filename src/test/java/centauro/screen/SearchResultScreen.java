@@ -1,8 +1,6 @@
 package centauro.screen;
 
 import java.util.List;
-
-import centauro.model.Product;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;

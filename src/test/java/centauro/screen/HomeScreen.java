@@ -2,12 +2,13 @@ package centauro.screen;
 
 import java.util.List;
 
-import centauro.model.Product;
+import io.appium.java_client.pagefactory.AndroidBy;
+import io.appium.java_client.pagefactory.AndroidFindAll;
 import org.junit.Assert;
-
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
+import org.junit.runners.Parameterized;
 
 public class HomeScreen extends BaseScreen {
 
@@ -15,7 +16,6 @@ public class HomeScreen extends BaseScreen {
 		super(driver);
 	}
 
-	// refinei o xpath dele, precisava melhorar
 	@AndroidFindBy(xpath = "//android.view.ViewGroup[@resource-id='br.com.sbf.centauro:id/homeToolbar']/android.widget.ImageButton")
 	private MobileElement btnMenu;
 
@@ -28,13 +28,18 @@ public class HomeScreen extends BaseScreen {
 	@AndroidFindBy(uiAutomator = "new UiSelector().text(\"Meus Pedidos\")")
 	private MobileElement btnMeusPedidos;
 
-	@AndroidFindBy(uiAutomator = "new UiSelector().text(\"Aguardando Pagamento\")")
-	private List<MobileElement> listOrders;
+	@AndroidFindAll(value = {
+			@AndroidBy(uiAutomator = "new UiSelector().text(\"Aguardando Pagamento\")"),
+			@AndroidBy(id = "br.com.sbf.centauro:id/price"),
+			@AndroidBy(id = "br.com.sbf.centauro:id/order_date"),
+			@AndroidBy(id = "br.com.sbf.centauro:id/order_number"),
+	})
+	private MobileElement elemOrder;
 
-	// ficou bem feio esse xpath
-	@AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.drawerlayout.widget.DrawerLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.recyclerview.widget.RecyclerView/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout")
-	private MobileElement lastItem;
-	
+	@AndroidFindBy(className = "android.widget.Button")
+	private MobileElement classButton;
+
+
 	public LoginScreen goToLoginScreen() {
 		clickOn(btnMenu);
 		clickOn(btnLogin);
@@ -46,12 +51,11 @@ public class HomeScreen extends BaseScreen {
 		Assert.assertEquals(labelEmail.getText(), string);
 	}
 
-
 	public OrderScreen goToLastOrder() {
 		clickOn(btnMenu);
 		clickOn(btnMeusPedidos);
-		waitUntilElementIsDisplayed(lastItem);
-		clickOn(listOrders.get(0));
+		clickOn(elemOrder);
+		isElementPresent(classButton);
 		return new OrderScreen(driver);
 	}
 

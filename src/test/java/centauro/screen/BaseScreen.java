@@ -15,9 +15,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import com.google.common.collect.ImmutableMap;
-
 import centauro.properties.LoadProperties;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
@@ -35,8 +33,9 @@ public class BaseScreen {
 
 	public BaseScreen(AppiumDriver<MobileElement> driver) {
 		this.driver = driver;
-		PageFactory.initElements(new AppiumFieldDecorator(this.driver), this);
-		this.wait = new WebDriverWait(driver, Integer.parseInt(LoadProperties.getConfig("timeout")));
+		int timeoutValue = Integer.parseInt(LoadProperties.getConfig("timeout"));
+		PageFactory.initElements(new AppiumFieldDecorator(this.driver, Duration.ofSeconds(timeoutValue/2)), this);
+		this.wait = new WebDriverWait(driver, timeoutValue);
 		this.dimensions = driver.manage().window().getSize().toString().split("\\D");
 	}
 
@@ -75,11 +74,13 @@ public class BaseScreen {
 		element.sendKeys((String) value);
 	}
 
-	protected void isPresent(MobileElement element, CharSequence value) {
-		this.wait = new WebDriverWait(driver, Integer.parseInt(LoadProperties.getConfig("timeout")));
-		wait.until(ExpectedConditions.elementToBeSelected(element));
-		element.clear();
-		element.sendKeys(value);
+	protected boolean isElementPresent(WebElement element) {
+		try{
+		wait.until(ExpectedConditions.visibilityOf(element));
+			return true;
+		}catch(Exception e){
+			return false;
+		}
 	}
 
 	protected boolean elementIsDisplayed(MobileElement element) {
@@ -186,7 +187,12 @@ public class BaseScreen {
 	}
 	
 	public void waitUntilElementIsClickable(MobileElement element) {
-		wait.until(ExpectedConditions.elementToBeClickable(element));
+		try {
+			wait.until(ExpectedConditions.elementToBeClickable(element));
+		} catch (Exception ex){
+			System.out.println(ex.getMessage());
+			swipeHalfScreen();
+		}
 	}
 
 	protected void pressEnterKeyboard() {
