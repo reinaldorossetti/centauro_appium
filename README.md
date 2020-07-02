@@ -1,55 +1,174 @@
-## Teste de fluxos de cadastro, compra por boleto e verificação de boleto gerado no pedido
+# Cucumber-Java Skeleton
 
-### Aplicativo da Centauro, versão 1.9.30
+[![Build Status](https://travis-ci.org/cucumber/cucumber-java-skeleton.svg?branch=master)](https://travis-ci.org/cucumber/cucumber-java-skeleton)
 
-Os usuários são gerados através da API Faker e uma classe com código gerador de CPF válido.
+This is the simplest possible build script setup for Cucumber using Java.
+There is nothing fancy like a webapp or browser testing. All this does is to show you how
+to install and run Cucumber!
 
-O projeto é feito em Java rodando com Maven e TestNG como TestRunner.
+There is a single feature file with one scenario. The scenario has three steps, two of them pending. See if you can make them all pass!
 
-Considerando que o ambiente local tenha as dependencias adequadas, como JDK, Maven e Android SDK, na raiz do projeto o seguinte comando deve ser executado:
+## Rules
+Keywords
+Each line that isn’t a blank line has to start with a Gherkin keyword, followed by any text you like. The only exceptions are the feature and scenario descriptions.
 
-`mvn clean test`
+#### The primary keywords are:
 
-Após execuções de teste, o relatório de execução pode ser consultado com o comando:
+Feature  
+Rule (as of Gherkin 6)  
+Example (or Scenario)  
+Given, When, Then, And, But (steps)  
+Background  
+Scenario Outline (or Scenario Template)  
+Examples  
 
-`allure serve`
-
-Que vai rodar um servidor local e abrir uma página de relatório no browser padrão.
-
-### Parâmetros de execução
-
-O arquivo config.properties define dados de configuração: TIMEOUT, device e UDID.
-O arquivo data.json define senha padrão, CEP, telefone e data de nascimento.
-
-
-#### NOTAS SOBRE COMPORTAMENTO DOS TESTES E APLICAÇÃO
-
->  Devido a um problema de comportamento que causava inconsistência na execução do teste, o CEP ficou fixado.
-
-> Dado há uma diferença de comportamento, a tela de consulta do pedido pode renderizar com o bloco de informações do pagamento no topo da tela ou mais abaixo. Possivelmente por conta de requisições assíncronas. Para isso foi colocado uma condição que se adapta ao caso nesse ponto, prevenindo quebra do fluxo.
-
-> Ao selecionar a opção de ver boleto, uma página html será carregada. Pensando que o teste deve ser performático e o ambiente preparado adequadamente para integração contínua, não inclui a etapa de seleção do app padrão para essa tarefa e estou considerando o próprio aplicativo da Centauro, carregando uma webview. Assim, a primeira execução pode falhar num device que não tenha essa opção definida.
+#### There are a few secondary keywords as well:  
+""" (Doc Strings)  
+| (Data Tables)  
+@ (Tags)  
+\# (Comments)  
 
 
-#### NOTAS SOBRE IMPLEMENTAÇÃO DE CÓDIGO
+#### Tag Expressions are boolean expressions of tags with the logical operators and, or and not.
 
-> Como o Cucumber cria uma nova instância de todas as classes definidas como step definitions, não é suportada herança. Para evitar boilerplate de métodos instanciando e derrubando driver por cenário, a abordagem utilizada foi de instanciar o PageObject HomeScreen em cada classe de Steps  e partir dele para as demais.
-> Além do PageObjects, o projeto também utiliza uma adaptação do pattern Robot
-
-#### Informações adicionais
-
-Como a massa é gerada dinamicamente há um arquivo output_customer.txt onde são inseridos os emails e CPF das contas geradas, para posterior consulta se preciso.
-
-
-#### Considerações finais
-
-Ao longo da construção do projeto e execução dos testes passei por diversos problemas:
--  diferentes tempos de resposta pro mesma consulta de produto, que causava timeout e falha;
--  tela de detalhes do pedido, que hora apresentava o boleto no topo da tela e ora na parte inferior da tela;
--  e principalmente a diferença do comportamento no final do fluxo de compra, que ora mostra o botão de consultar boleto, ora mostra detalhes do pedido sem apresentar o boleto na tela. * Aqui, mesmo com a troca por alguns CEPs ou utilizando o CEP que funcionava anteriormente passou a não funcionar mais.
+Migrating from old style tags  
+--tags @dev  //=> stays the same  
+--tags ~@dev //=> becomes --tags 'not @dev'  
+--tags @foo,@bar //=> becomes --tags '@foo or @bar'  
+--tags @foo --tags @bar //=> becomes --tags '@foo and bar'  
+--tags ~@foo --tags @bar,@zap //=> becomes --tags 'not @foo and (@bar or @zap)'  
 
 
-### Links:
+## Get the code
 
-- [Thread sobre a restrição de herança no Cucumber](https://groups.google.com/forum/#!topic/cukes/ke7MhnjqQGQ)
-- [Robot Pattern](https://jakewharton.com/testing-robots/)
+Git:
+
+    git clone https://github.com/cucumber/cucumber-java-skeleton.git
+    cd cucumber-java-skeleton
+
+Subversion:
+
+    svn checkout https://github.com/cucumber/cucumber-java-skeleton/trunk cucumber-java-skeleton
+    cd cucumber-java-skeleton
+
+## Use Maven
+
+MACOS - Run following command on Terminal
+```
+    $ brew update  
+    $ brew install maven
+```
+
+Open a command window and run:
+
+    mvn test
+
+This runs Cucumber features using Cucumber's JUnit runner. The `@RunWith(Cucumber.class)` annotation on the `RunCukesTest`
+class tells JUnit to kick off Cucumber.
+
+## Use Gradle
+
+Open a command window and run:
+
+    gradlew test --info
+
+This runs Cucumber features using Cucumber's JUnit runner. The `@RunWith(Cucumber.class)` annotation on the `RunCukesTest`
+class tells JUnit to kick off Cucumber.
+
+## Overriding options
+
+The Cucumber runtime parses command line options to know what features to run, where the glue code lives, what plugins to use etc.
+When you use the JUnit runner, these options are generated from the `@CucumberOptions` annotation on your test.
+
+Sometimes it can be useful to override these options without changing or recompiling the JUnit class. This can be done with the
+`cucumber.options` system property. The general form is:
+
+Using Maven:
+
+    mvn -Dcucumber.options="--tags @cukesY and @cukesX" test
+
+Using Gradle:
+
+    ./gradlew -Dcucumber.options="--tags @cukesY and @cukesX" test --info
+
+Let's look at some things you can do with `cucumber.options`. Try this:
+
+    ./gradlew -Dcucumber.options="--help"
+
+That should list all the available options.
+
+*IMPORTANT*
+
+When you override options with `-Dcucumber.options`, you will completely override whatever options are hard-coded in
+your `@CucumberOptions` or in the script calling `cucumber.api.cli.Main`. There is one exception to this rule, and that
+is the `--plugin` option. This will not _override_, but _add_ a plugin. The reason for this is to make it easier
+for 3rd party tools (such as [Cucumber Pro](https://cucumber.pro/)) to automatically configure additional plugins by appending arguments to a `cucumber.properties`
+file.
+
+### Run a subset of Features or Scenarios
+
+Specify a particular scenario by *line* (and use the pretty plugin, which prints the scenario back)
+
+    -Dcucumber.options="classpath:skeleton/belly.feature:4 --plugin pretty"
+
+This works because Maven puts `./src/test/resources` on your `classpath`.
+You can also specify files to run by filesystem path:
+
+    -Dcucumber.options="src/test/resources/skeleton/belly.feature:4 --plugin pretty"
+
+You can also specify what to run by *tag*:
+
+    -Dcucumber.options="--tags @cukesY and @cukesX --plugin pretty"
+
+### Running only the scenarios that failed in the previous run
+
+    -Dcucumber.options="@target/rerun.txt"
+
+This works as long as you have the `rerun` formatter enabled.
+
+### Specify a different formatter:
+
+For example a JUnit formatter:
+
+    ./gradlew -Dcucumber.options="--plugin junit:target/cucumber-junit-report.xml"
+
+
+## Use Maven + Allure
+
+run your tests
+```
+mvn clean test  
+```
+You can generate a report using one of the following command:
+```
+mvn allure:serve  
+```
+Report will be generated into temp folder. Web server with results will start.
+```
+mvn allure:report
+```
+Report will be generated tо directory: target/site/allure-maven/index.htm
+
+## Project Structure
+````text
+Our project structure is now as follows:  
+├── pom.xml             (containing Cucumber and JUnit dependencies)
+└── src (java root path project)
+    ├── main (project code)
+    │   └── java        (marked as java sources root)
+    │   └── resources   (marked as java resources root)
+    └── test (project test)
+        ├── java        (marked as test sources root)
+        └── resources   (marked as test resources root)
+                └── <project> (project name io.cucumber.skeleton)
+                       └── belly.feature
+                └── allure.properties
+````
+
+## References:  
+
+https://github.com/cucumber/cucumber/tree/master/tag-expressions  
+https://cucumber.io/docs/gherkin/reference/   
+https://github.com/allure-framework/allure-maven   
+https://cucumber.io/docs/installation/java/  
+https://medium.com/@mlvandijk/getting-started-with-cucumber-in-java-a-10-minute-tutorial-586652d2c82  
