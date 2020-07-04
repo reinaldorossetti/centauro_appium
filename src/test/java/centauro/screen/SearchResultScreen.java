@@ -5,6 +5,11 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 
+/**
+ * A responsabilidade da Page é transformar os elementos da tela em objetos e realizar as ações.
+ * As funções devem ter no Máximo 20 linhas, o que é generico deve estar na BaseScreen.
+ */
+
 public class SearchResultScreen extends BaseScreen {
 
 	public SearchResultScreen(AppiumDriver<MobileElement> driver) {
@@ -44,7 +49,7 @@ public class SearchResultScreen extends BaseScreen {
 	@AndroidFindBy(id = "br.com.sbf.centauro:id/tv_size_single")
 	private MobileElement sizeSingle;
 
-	public CartScreen addItemToCart() {
+	public void addItemToCart() {
 		String product_name = returnFromJsonData("product_name");
 		System.out.println("Produto encontrando: " + product_name);
 		selectOptionFromList(product_name.split(" ")[0], listResults);
@@ -52,20 +57,22 @@ public class SearchResultScreen extends BaseScreen {
 		selectRandomFromList(listProductName);
 		moveToBottom();
 		verifyElementIsDisplayed(btnComprar);
+		productSize();
+		clickOn(btnComprar);
+		clickOn(btnMoveToCart);
+	}
+
+	public void productSize(){
 		Boolean tam_size_result = selectFirstFromList(listTamSize);
 		if (!tam_size_result){
 			clickOn(sizeSingle);
 		}
-		clickOn(btnComprar);
-		clickOn(btnMoveToCart);
-		return new CartScreen(driver);
 	}
 
-	public SearchResultScreen searchItem() {
+	public void searchItem() {
 		clickOn(searchIcon);
 		sendValue(inputSearch, returnFromJsonData("product_name"));
 		pressEnterKeyboard();
 		pressEnterKeyboard();
-		return new SearchResultScreen(driver);
 	}
 }

@@ -25,6 +25,13 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 
+
+/**
+ * A responsabilidade da BaseScreen é modelar as funções globais para ser utilizadas nas Pages.
+ * Assim diminuimos o codigo ao maximo possivel nas pages.
+ * O correto é criar uma Interface BaseScreen e Criar Classes de Ações e Esperas.
+ */
+
 public class BaseScreen {
 	
 	protected AppiumDriver<MobileElement> driver;

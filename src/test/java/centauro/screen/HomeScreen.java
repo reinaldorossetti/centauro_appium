@@ -1,14 +1,16 @@
 package centauro.screen;
 
-import java.util.List;
-
 import io.appium.java_client.pagefactory.AndroidBy;
 import io.appium.java_client.pagefactory.AndroidFindAll;
-import org.junit.Assert;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
-import org.junit.runners.Parameterized;
+
+
+/**
+ * A responsabilidade da Page é transformar os elementos da tela em objetos e realizar as ações.
+ * As funções devem ter no Máximo 20 linhas, o que é generico deve estar na BaseScreen.
+ */
 
 public class HomeScreen extends BaseScreen {
 
@@ -40,23 +42,21 @@ public class HomeScreen extends BaseScreen {
 	private MobileElement classButton;
 
 
-	public LoginScreen goToLoginScreen() {
+	public void goToLoginScreen() {
 		clickOn(btnMenu);
 		clickOn(btnLogin);
-		return new LoginScreen(driver);
 	}
 
-	public void verifyEmail(String string) {
+	public String verifyEmail(String string) {
 		clickOn(btnMenu);
-		Assert.assertEquals(labelEmail.getText(), string);
+		return labelEmail.getText();
 	}
 
-	public OrderScreen goToLastOrder() {
+	public void goToLastOrder() {
 		clickOn(btnMenu);
 		clickOn(btnMeusPedidos);
 		clickOn(elemOrder);
 		isElementPresent(classButton);
-		return new OrderScreen(driver);
 	}
 
 }

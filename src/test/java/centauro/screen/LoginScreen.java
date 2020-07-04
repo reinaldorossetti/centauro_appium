@@ -5,6 +5,11 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 
+/**
+ * A responsabilidade da Page é transformar os elementos da tela em objetos e realizar as ações.
+ * As funções devem ter no Máximo 20 linhas, o que é generico deve estar na BaseScreen.
+ */
+
 public class LoginScreen extends BaseScreen {
 
 	public LoginScreen(AppiumDriver<MobileElement> driver) {
@@ -23,12 +28,11 @@ public class LoginScreen extends BaseScreen {
 	@AndroidFindBy(id = "br.com.sbf.centauro:id/btActionLoginUser")
 	private MobileElement btnLogin;
 	
-	public RegisterScreen goToRegisterScreen() {
+	public void goToRegisterScreen() {
 		clickOn(btnRegisterAccount);
-		return new RegisterScreen(driver);
 	}
  
-	public HomeScreen loginCustomer(Customer customer) {
+	public void loginCustomer(Customer customer) {
 		System.out.println("Email: " + customer.email + " - Password: " + customer.password);
 		sendValue(inputEmail, customer.email);
 		hideKeyboard();
@@ -36,10 +40,9 @@ public class LoginScreen extends BaseScreen {
 		sendValue(inputPassword, customer.password);
 		hideKeyboard();
 		clickOn(btnLogin);
-		return new HomeScreen(driver);
 	}
 
-	public HomeScreen loginDefault() {
+	public void loginDefault() {
 		String email = returnFromJsonData("email");
 		String password = returnFromJsonData("password");
 		System.out.println("Email: " + email);
@@ -49,6 +52,5 @@ public class LoginScreen extends BaseScreen {
 		sendValue(inputPassword, password);
 		hideKeyboard();
 		clickOn(btnLogin);
-		return new HomeScreen(driver);
 	}
 }
